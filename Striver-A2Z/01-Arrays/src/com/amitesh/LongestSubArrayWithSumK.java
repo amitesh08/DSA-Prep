@@ -6,6 +6,7 @@ public class LongestSubArrayWithSumK {
         int[] arr = {1, 2, 3, 1, 1, 1, 4, 2, 3};
         int k = 3;
         System.out.println(longestSubArrayBrute(arr, k));
+        System.out.println(longestSubArrayOptimal(arr, k));
     }
     public static int longestSubArrayBrute(int[] arr, int k) {
         //Brute Force
@@ -20,18 +21,29 @@ public class LongestSubArrayWithSumK {
         }
         return length;
 
-    }public static int longestSubArrayOptimal(int[] arr, int k) {
+    }
+    public static int longestSubArrayOptimal(int[] arr, int k) {
         //optimal
-        int length = 0;
-        for (int i = 0; i < arr.length; i++) {
-            int sum = 0;
-            for (int j = i; j < arr.length; j++) {
-                sum += arr[j];
+        int i = 0;
+        int j = 0;
+        int max = 0;
 
-                if(sum == k) length = Math.max(length, j-i + 1);
+        long sum = 0;
+
+        while (j < arr.length) {
+            sum += arr[j];
+
+            while (sum > k) {  // shrink window
+                sum -= arr[i];
+                i++;
             }
-        }
-        return length;
 
+            if (sum == k) {
+                max = Math.max(max, j - i + 1);
+            }
+
+            j++; // always move forward
+        }
+        return max;
     }
 }
