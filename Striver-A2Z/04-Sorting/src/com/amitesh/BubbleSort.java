@@ -53,5 +53,4 @@ public class BubbleSort {
             if (!swapped) break;
         }
     }
-
 }
